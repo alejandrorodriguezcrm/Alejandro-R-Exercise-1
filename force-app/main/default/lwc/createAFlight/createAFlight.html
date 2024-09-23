@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title="Create Flight">
+        <div class="slds-m-around_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            <template lwc:if={recordId}>
+                <lightning-record-view-form record-id={recordId} object-api-name="Flight__c">
+                    <div class="slds-box slds-theme_default slds-m-top_medium">
+                        <p><strong>Flight Information:</strong></p>
+                        <lightning-output-field field-name="Name"></lightning-output-field>
+                        <lightning-output-field field-name="Departure_Airport__c"></lightning-output-field>
+                        <lightning-output-field field-name="Arrival_Airport__c"></lightning-output-field>
+                        <lightning-output-field field-name="Flight_Distance__c"></lightning-output-field>
+                    </div>
+                </lightning-record-view-form>
+            </template>
+            <template lwc:else>
+                <lightning-layout horizontal-align="start" multiple-rows="true">
+                    <lightning-layout-item flexibility="auto" size="6" padding="around-small">
+                        <lightning-record-picker
+                            label="Please select departure airport"
+                            placeholder="Search ..."
+                            object-api-name="Airports__c"
+                            onchange={handleDepartureSelect}
+                            matching-info={matchingInfo}
+                        ></lightning-record-picker>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="6" padding="around-small">
+                        <lightning-record-picker
+                            label="Please select arrival airport"
+                            placeholder="Search ..."
+                            object-api-name="Airports__c"
+                            onchange={handleArrivalSelect}
+                            matching-info={matchingInfo}
+                        ></lightning-record-picker>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="12" padding="around-small">
+                        <lightning-button class="slds-float_right" variant="brand" label="Save" title="Save" onclick={saveFlight}></lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+        </div>
+    </lightning-card>
+  </template>
